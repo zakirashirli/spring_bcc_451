@@ -41,4 +41,19 @@ public class BookController {
         bookService.delete(id);
     }
 
+    // Query Methods
+    @GetMapping("/search")
+    public List<Book> getBooksByTitle(@RequestParam String title) {
+        return bookService.getByTitle(title);
+    }
+
+    @GetMapping("/price/greater")
+    public List<Book> getBooksByMinPrice(@RequestParam Double price) {
+        return bookService.getByMinPrice(price);
+    }
+
+    @GetMapping("/price/less")
+    public List<Book> getBooksByMaxPrice(@RequestParam Double price) {
+        return bookService.getByMaxPrice(price);
+    }
 }

@@ -73,4 +73,17 @@ public class BookService {
                 .orElseThrow(() -> new NotFoundException("Book is not found: " + id));
         bookRepository.delete(book);
     }
+
+    // QUERY METHODS
+    public List<Book> getByTitle(String title){
+        return bookRepository.findByTitle(title);
+    }
+
+    public List<Book> getByMinPrice(Double minPrice){
+        return bookRepository.findByPriceGreaterThan(minPrice);
+    }
+
+    public List<Book> getByMaxPrice(Double maxPrice){
+        return bookRepository.findByPriceLessThan(maxPrice);
+    }
 }
