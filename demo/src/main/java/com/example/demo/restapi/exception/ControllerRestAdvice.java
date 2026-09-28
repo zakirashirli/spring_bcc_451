@@ -14,4 +14,11 @@ public class ControllerRestAdvice {
                 .status(HttpStatus.NOT_FOUND)
                 .body(exception.getMessage());
     }
+
+    @ExceptionHandler(AuthorIsRequiredException.class)
+    public ResponseEntity<String> handleAuthorIsRequiredException(AuthorIsRequiredException exception) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(exception.getMessage());
+    }
 }
