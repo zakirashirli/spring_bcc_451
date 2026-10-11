@@ -37,6 +37,7 @@ public class AuthorService {
 
         author.setFullname(newAuthor.getFullname());
         author.setCountry(newAuthor.getCountry());
+        author.setStyle(newAuthor.getStyle());
 
         return authorRepository.save(author);
     }

@@ -23,6 +23,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
+    // CRUD methods
     public List<Book> getAll() {
         return bookRepository.findAll();
     }
@@ -91,7 +92,7 @@ public class BookService {
     }
 
     public List<Book> getByGenre(String genre){
-        return bookRepository.findByTitleContainingIgnoreCase(genre);
+        return bookRepository.findByGenreContainingIgnoreCase(genre);
     }
 
     public List<Book> getByMinPrice(Double minPrice){
