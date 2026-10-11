@@ -1,6 +1,6 @@
 package com.example.demo.library.service;
 
-import com.example.demo.library.entity.Author;
+import com.example.demo.model.entity.Author;
 import com.example.demo.library.repository.AuthorRepository;
 import com.example.demo.restapi.exception.NotFoundException;
 import org.springframework.stereotype.Service;

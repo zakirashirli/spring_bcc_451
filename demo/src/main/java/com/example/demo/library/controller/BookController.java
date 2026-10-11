@@ -1,6 +1,6 @@
 package com.example.demo.library.controller;
 
-import com.example.demo.library.entity.Book;
+import com.example.demo.model.entity.Book;
 import com.example.demo.library.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
