@@ -1,13 +1,13 @@
 package com.example.demo.library.service;
 
+import com.example.demo.exceptions.BadRequestException;
+import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.model.dto.book.BookRequest;
 import com.example.demo.model.dto.book.BookResponse;
 import com.example.demo.model.entity.Author;
 import com.example.demo.model.entity.Book;
 import com.example.demo.library.repository.AuthorRepository;
 import com.example.demo.library.repository.BookRepository;
-import com.example.demo.restapi.exception.AuthorIsRequiredException;
-import com.example.demo.restapi.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class BookService {
     public BookResponse create(BookRequest bookRequest) {
 
         if (bookRequest.getAuthorId() == null) {
-            throw new AuthorIsRequiredException("Author is required!");
+            throw new BadRequestException("Author is required!");
         }
 
         Long authorId = bookRequest.getAuthorId();
