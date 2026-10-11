@@ -1,5 +1,7 @@
 package com.example.demo.library.controller;
 
+import com.example.demo.model.dto.book.BookRequest;
+import com.example.demo.model.dto.book.BookResponse;
 import com.example.demo.model.entity.Book;
 import com.example.demo.library.service.BookService;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +29,13 @@ public class BookController {
     }
 
     @PostMapping("/books/create")
-    public Book createBook(@RequestBody Book book) {
-        return bookService.create(book);
+    public BookResponse createBook(@RequestBody BookRequest bookRequest) {
+        return bookService.create(bookRequest);
     }
 
     @PutMapping("/books/update/{id}")
-    public Book updateBook(@PathVariable Long id, @RequestBody Book book) {
-        return bookService.update(id,book);
+    public BookResponse updateBook(@PathVariable Long id, @RequestBody BookRequest bookRequest) {
+        return bookService.update(id,bookRequest);
     }
 
     @DeleteMapping("/books/delete/{id}")
@@ -42,9 +44,14 @@ public class BookController {
     }
 
     // Query Methods
-    @GetMapping("/search")
+    @GetMapping("/search/{title}")
     public List<Book> getBooksByTitle(@RequestParam String title) {
         return bookService.getByTitle(title);
+    }
+
+    @GetMapping("/search/{genre}")
+    public List<Book> getBooksByGenre(@RequestParam String genre) {
+        return bookService.getByGenre(genre);
     }
 
     @GetMapping("/price/greater")

@@ -1,5 +1,7 @@
 package com.example.demo.library.service;
 
+import com.example.demo.model.dto.book.BookRequest;
+import com.example.demo.model.dto.book.BookResponse;
 import com.example.demo.model.entity.Author;
 import com.example.demo.model.entity.Book;
 import com.example.demo.library.repository.AuthorRepository;
@@ -32,40 +34,49 @@ public class BookService {
         return book;
     }
 
-    public Book create(Book book) {
+    public BookResponse create(BookRequest bookRequest) {
 
-        if (book.getAuthor() == null || book.getAuthor().getId() == null) {
+        if (bookRequest.getAuthorId() == null) {
             throw new AuthorIsRequiredException("Author is required!");
         }
 
-        Long authorId = book.getAuthor().getId();
+        Long authorId = bookRequest.getAuthorId();
 
         Author author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new NotFoundException("Author not found: " + authorId));
 
+
+        Book book = new Book();
+
+        book.setTitle(bookRequest.getTitle());
+        book.setGenre(bookRequest.getGenre());
+        book.setPrice(bookRequest.getPrice());
         book.setAuthor(author);
 
-        return bookRepository.save(book);
+        Book savedBook = bookRepository.save(book);
+
+        return convertToResponse(savedBook);
     }
 
-    public Book update(Long id, Book newBook) {
+    public BookResponse update(Long id, BookRequest newBook) {
+
+        Long authorId = newBook.getAuthorId();
+
+        Author author = authorRepository.findById(authorId)
+                .orElseThrow(() -> new NotFoundException("Author not found: " + authorId));
+
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Book is not found: " + id));
 
         book.setTitle(newBook.getTitle());
-        book.setAuthor(newBook.getAuthor());
+        book.setGenre(newBook.getGenre());
+        book.setPrice(newBook.getPrice());
+        book.setAuthor(author);
 
 
-        if (newBook.getAuthor() != null && newBook.getAuthor().getId() != null) {
-            Long authorId = newBook.getAuthor().getId();
+        Book updatedBook = bookRepository.save(book);
 
-            Author author = authorRepository.findById(authorId)
-                    .orElseThrow(() -> new NotFoundException("Author not found: " + authorId));
-
-            authorRepository.save(author);
-        }
-
-        return bookRepository.save(book);
+        return convertToResponse(updatedBook);
     }
 
     public void delete(Long id) {
@@ -76,7 +87,11 @@ public class BookService {
 
     // QUERY METHODS
     public List<Book> getByTitle(String title){
-        return bookRepository.findByTitle(title);
+        return bookRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    public List<Book> getByGenre(String genre){
+        return bookRepository.findByTitleContainingIgnoreCase(genre);
     }
 
     public List<Book> getByMinPrice(Double minPrice){
@@ -85,5 +100,16 @@ public class BookService {
 
     public List<Book> getByMaxPrice(Double maxPrice){
         return bookRepository.findByPriceLessThan(maxPrice);
+    }
+
+    // DTO -> Entity
+    private BookResponse convertToResponse(Book book){
+        return new BookResponse(
+                book.getId(),
+                book.getTitle(),
+                book.getGenre(),
+                book.getPrice(),
+                book.getAuthor().getFullname()
+        );
     }
 }
