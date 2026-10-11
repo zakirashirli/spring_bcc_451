@@ -1,4 +1,4 @@
-package com.example.demo.library.controller;
+package com.example.demo.controller;
 
 import com.example.demo.model.dto.book.BookRequest;
 import com.example.demo.model.dto.book.BookResponse;

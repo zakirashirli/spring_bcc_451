@@ -6,8 +6,8 @@ import com.example.demo.model.dto.book.BookRequest;
 import com.example.demo.model.dto.book.BookResponse;
 import com.example.demo.model.entity.Author;
 import com.example.demo.model.entity.Book;
-import com.example.demo.library.repository.AuthorRepository;
-import com.example.demo.library.repository.BookRepository;
+import com.example.demo.repository.AuthorRepository;
+import com.example.demo.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

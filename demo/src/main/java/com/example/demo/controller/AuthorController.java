@@ -1,4 +1,4 @@
-package com.example.demo.library.controller;
+package com.example.demo.controller;
 
 import com.example.demo.model.entity.Author;
 import com.example.demo.library.service.AuthorService;

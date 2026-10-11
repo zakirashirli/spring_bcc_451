@@ -2,7 +2,7 @@ package com.example.demo.library.service;
 
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.model.entity.Author;
-import com.example.demo.library.repository.AuthorRepository;
+import com.example.demo.repository.AuthorRepository;
 
 import org.springframework.stereotype.Service;
 
